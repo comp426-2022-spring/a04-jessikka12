@@ -10,7 +10,7 @@ const Database = require('better-sqlite3')
 
 if (help) {
     // print help message
-    console.log(```server.js [options]
+    console.log(`server.js [options]
 
     --port	Set the port number for the server to listen on. Must be an integer
                 between 1 and 65535.
@@ -23,7 +23,7 @@ if (help) {
     --log		If set to false, no log files are written. Defaults to true.
                 Logs are always written to database.
   
-    --help	Return this message and exit.```)
+    --help	Return this message and exit.`)
 } else {
     // initialize the args
     const port = args.port || 3000
