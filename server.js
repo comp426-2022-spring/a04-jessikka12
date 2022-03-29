@@ -10,16 +10,20 @@ const Database = require('better-sqlite3')
 
 if (help) {
     // print help message
-    console.log('server.js [options]\n')
-    console.log('  --port\tSet the port number for the server to listen on. Must be an integer')
-    console.log('              between 1 and 65535.\n')
-    console.log('  --debug\tIf set to `true`, creates endlpoints /app/log/access/ which returns')
-    console.log('              a JSON access log from the database and /app/error which throws ')
-    console.log('              an error with the message "Error test successful." Defaults to ')
-    console.log('			  `false`.\n')
-    console.log('  --log\t\tIf set to false, no log files are written. Defaults to true.')
-    console.log('			  Logs are always written to database.\n')
-    console.log('  --help\tReturn this message and exit.')
+    console.log(```server.js [options]
+
+    --port	Set the port number for the server to listen on. Must be an integer
+                between 1 and 65535.
+  
+    --debug	If set to \`true\`, creates endlpoints /app/log/access/ which returns
+                a JSON access log from the database and /app/error which throws 
+                an error with the message "Error test successful." Defaults to 
+                \`false\`.
+  
+    --log		If set to false, no log files are written. Defaults to true.
+                Logs are always written to database.
+  
+    --help	Return this message and exit.```)
 } else {
     // initialize the args
     const port = args.port || 3000
@@ -28,6 +32,12 @@ if (help) {
     
     // create database
     const db = new Database('log.db')
+
+    // create table
+    const sqlInit = `
+        CREATE TABLE accesslog
+
+        `;
 
     // create app server
     const server = app.listen(port, () => {
