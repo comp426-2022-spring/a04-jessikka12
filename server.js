@@ -17,9 +17,14 @@ if (help) {
     console.log('			  Logs are always written to database.\n')
     console.log('  --help\tReturn this message and exit.')
 } else {
-    if (args.port > 0 && args.port <= 65535) {
-        const port = args.port || 3000
-    }
+    const port = args.port || 3000
+    const debug = args.debug || false
+    const log = args.log || true
+
+    // create app server
+    const server = app.listen(port, () => {
+        console.log('App listening on port %PORT%'.replace("%PORT%", port))
+    })
     
 }
 
