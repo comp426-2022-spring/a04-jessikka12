@@ -5,7 +5,11 @@ const app = express()
 const args = require('minimist')(process.argv.slice(2))
 const help = args.help
 
+const Database = require('better-sqlite3')
+
+
 if (help) {
+    // print help message
     console.log('server.js [options]\n')
     console.log('  --port\tSet the port number for the server to listen on. Must be an integer')
     console.log('              between 1 and 65535.\n')
@@ -17,9 +21,13 @@ if (help) {
     console.log('			  Logs are always written to database.\n')
     console.log('  --help\tReturn this message and exit.')
 } else {
+    // initialize the args
     const port = args.port || 3000
     const debug = args.debug || false
     const log = args.log || true
+    
+    // create database
+    const db = new Database('log.db')
 
     // create app server
     const server = app.listen(port, () => {
