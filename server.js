@@ -58,10 +58,31 @@ if (help) {
         console.log('App listening on port %PORT%'.replace("%PORT%", port))
     })
 
+    const addData = (req, res, next) => {
+        let logdata = {
+            remoteaddr: req.ip,
+            remoteuser: req.user,
+            time: Date.now(),
+            method: req.method,
+            url: req.url,
+            protocol: req.protocol,
+            httpversion: req.httpVersion,
+            secure: req.secure,
+            status: res.statusCode,
+            referer: req.headers['referer'],
+            useragent: req.headers['user-agent']
+        }
+        db.prepare(`INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, 
+            httpversion, secure, status, referer, useragent)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `)
+        next()
+    }
+
     // middleware adds data to table
     app.use( (req, res, next) => {
         // Your middleware goes here.
-
+        addData(req, res, next)
     })
 
     // if debug is true
