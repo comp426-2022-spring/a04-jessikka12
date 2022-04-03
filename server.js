@@ -2,6 +2,10 @@
 const express = require('express')
 const app = express()
 
+const fs = require('fs')
+
+const morgan = require('morgan')
+
 const args = require('minimist')(process.argv.slice(2))
 const help = args.help
 
@@ -36,7 +40,7 @@ if (help) {
 
     // create table
     const sqlInit = `CREATE TABLE IF NOT EXISTS accesslog (
-            remoteaddr REAL, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT,
+            remoteaddr TEXT, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT,
             httpversion TEXT, secure TEXT, status INTEGER, referer TEXT, useragent TEXT
         )`;
     db.exec(sqlInit)
@@ -81,7 +85,7 @@ if (help) {
         // endpoint /app/log/access
         app.get('/app/log/access', (req, res) => {
             // do the thing
-
+            
         })
 
         // endpoint /app/error
@@ -89,6 +93,18 @@ if (help) {
             // do the thing
             throw new Error("Error test successful.")
         })
+    }
+
+    // if log is true
+    if (log) {
+        
+        // Use morgan for logging to files
+        // Create a write stream to append (flags: 'a') to a file
+        const WRITESTREAM = fs.createWriteStream('FILE', { flags: 'a' })
+        // Set up the access logging middleware
+        app.use(morgan('FORMAT', { stream: WRITESTREAM }))
+
+
     }
 }
 
