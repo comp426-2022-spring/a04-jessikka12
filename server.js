@@ -94,11 +94,13 @@ if (help) {
         // endpoint /app/log/access
         app.get('/app/log/access', (req, res) => {
             // do the thing
+
         })
 
         // endpoint /app/error
         app.get('/app/error', (req, res) => {
             // do the thing
+            throw new Error("Error test successful.")
         })
     }
 }
