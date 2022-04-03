@@ -35,19 +35,6 @@ if (help) {
     const db = new Database('log.db')
 
     // create table
-    // let logdata = {
-    //     remoteaddr: req.ip,
-    //     remoteuser: req.user,
-    //     time: Date.now(),
-    //     method: req.method,
-    //     url: req.url,
-    //     protocol: req.protocol,
-    //     httpversion: req.httpVersion,
-    //     secure: req.secure,
-    //     status: res.statusCode,
-    //     referer: req.headers['referer'],
-    //     useragent: req.headers['user-agent']
-    // }
     const sqlInit = `CREATE TABLE IF NOT EXISTS accesslog (
             remoteaddr TEXT, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT,
             httpversion TEXT, secure TEXT, status TEXT, referer TEXT, useragent TEXT
@@ -77,8 +64,8 @@ if (help) {
             protocol, httpversion, secure, status, referer, useragent)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `)
-        prep.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method,
-            logdata.url, logdata.protocol, logdata.httpversion, logdata.secure, lotdata.status,
+        const info = prep.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method,
+            logdata.url, logdata.protocol, logdata.httpversion, logdata.secure, logdata.status,
             logdata.referer, logdata.useragent)
         next()
     }
