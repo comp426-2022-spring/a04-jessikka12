@@ -36,8 +36,8 @@ if (help) {
 
     // create table
     const sqlInit = `CREATE TABLE IF NOT EXISTS accesslog (
-            remoteaddr TEXT, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT,
-            httpversion TEXT, secure TEXT, status TEXT, referer TEXT, useragent TEXT
+            remoteaddr REAL, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT,
+            httpversion TEXT, secure TEXT, status INTEGER, referer TEXT, useragent TEXT
         )`;
     db.exec(sqlInit)
 
@@ -60,13 +60,12 @@ if (help) {
             referer: req.headers['referer'],
             useragent: req.headers['user-agent']
         }
-        const prep = db.prepare(`INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, 
-            protocol, httpversion, secure, status, referer, useragent)
+        const prep = db.prepare(`INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol,
+            httpversion, secure, status, referer, useragent)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `)
-        const info = prep.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method,
-            logdata.url, logdata.protocol, logdata.httpversion, logdata.secure, logdata.status,
-            logdata.referer, logdata.useragent)
+        prep.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method, logdata.url, 
+            logdata.protocol, logdata.httpversion, log.secure, logdata.status, logdata.referer, logdata.useragent)
         next()
     }
 
