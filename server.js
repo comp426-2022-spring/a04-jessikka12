@@ -72,10 +72,13 @@ if (help) {
             referer: req.headers['referer'],
             useragent: req.headers['user-agent']
         }
-        db.prepare(`INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, 
-            httpversion, secure, status, referer, useragent)
+        const prep = db.prepare(`INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, 
+            protocol, httpversion, secure, status, referer, useragent)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `)
+        prep.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method,
+            logdata.url, logdata.protocol, logdata.httpversion, logdata.secure, lotdata.status,
+            logdata.referer, logdata.useragent)
         next()
     }
 
@@ -83,6 +86,7 @@ if (help) {
     app.use( (req, res, next) => {
         // Your middleware goes here.
         addData(req, res, next)
+        res.status(200)
     })
 
     // if debug is true
