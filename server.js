@@ -24,9 +24,10 @@ if (help) {
                 Logs are always written to database.
   
     --help	Return this message and exit.`)
+    process.exit(0)
 } else {
     // initialize the args
-    const port = args.port || 3000
+    const port = args.port || 5555
     const debug = args.debug || false
     const log = args.log || true
     
