@@ -84,13 +84,14 @@ if (help) {
     if (debug) {
         // endpoint /app/log/access
         app.get('/app/log/access', (req, res) => {
-            // do the thing
-            
+            // return stuff in db
+            const getprep = db.prepare(`SELECT * FROM accesslog`).all()
+            res.status(200).json(getprep)
         })
 
         // endpoint /app/error
         app.get('/app/error', (req, res) => {
-            // do the thing
+            // error out
             throw new Error("Error test successful.")
         })
     }
