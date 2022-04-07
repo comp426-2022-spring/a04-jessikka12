@@ -17,6 +17,7 @@ const log = args.log
 
 const Database = require('better-sqlite3')
 
+console.log(help,port,debug,log)
 if (help) {
     // print help message
     console.log(`server.js [options]
@@ -97,7 +98,7 @@ if (help) {
     }
 
     // if log is true
-    if (log) {
+    if (log == true) {
         // Use morgan for logging to files
         // Create a write stream to append (flags: 'a') to a file
         const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
