@@ -17,7 +17,6 @@ const log = args.log
 
 const Database = require('better-sqlite3')
 
-console.log(help,port,debug,log)
 if (help) {
     // print help message
     console.log(`server.js [options]
