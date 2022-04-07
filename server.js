@@ -33,7 +33,7 @@ if (help) {
     // initialize the args
     const port = args.port || 5555
     const debug = args.debug || false
-    const log = args.log || true
+    const log = args.log
     
     // create database
     const db = new Database('log.db')
@@ -104,7 +104,7 @@ if (help) {
         // Set up the access logging middleware
         app.use(morgan('combined', { stream: accessLog }))
     } else {
-        accessLog.end()
+        fs.unlink('access.log')
     }
 }
 
