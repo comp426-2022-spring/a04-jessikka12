@@ -97,15 +97,14 @@ if (help) {
     }
 
     // if log is true
+    // Create a write stream to append (flags: 'a') to a file
+    const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
     if (log) {
-        
         // Use morgan for logging to files
-        // Create a write stream to append (flags: 'a') to a file
-        const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
         // Set up the access logging middleware
         app.use(morgan('combined', { stream: accessLog }))
-
-
+    } else {
+        accessLog.end()
     }
 }
 
