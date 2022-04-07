@@ -7,9 +7,7 @@ const fs = require('fs')
 const morgan = require('morgan')
 
 const args = require('minimist')(process.argv.slice(2), {
-    port: 5555,
-    debug: false,
-    log: true
+    default: {port: 5555, debug: false, log: true}
 })
 // initialize the args
 const help = args.help
@@ -19,7 +17,7 @@ const log = args.log
 
 const Database = require('better-sqlite3')
 
-
+console.log(help,port,debug,log)
 if (help) {
     // print help message
     console.log(`server.js [options]
