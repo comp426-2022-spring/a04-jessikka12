@@ -6,8 +6,16 @@ const fs = require('fs')
 
 const morgan = require('morgan')
 
-const args = require('minimist')(process.argv.slice(2))
+const args = require('minimist')(process.argv.slice(2), {
+    port: 5555,
+    debug: false,
+    log: true
+})
+// initialize the args
 const help = args.help
+const port = args.port
+const debug = args.debug
+const log = args.log
 
 const Database = require('better-sqlite3')
 
@@ -30,11 +38,6 @@ if (help) {
     --help	Return this message and exit.`)
     process.exit(0)
 } else {
-    // initialize the args
-    const port = args.port || 5555
-    const debug = args.debug || false
-    const log = args.log
-    
     // create database
     const db = new Database('log.db')
 
@@ -97,14 +100,12 @@ if (help) {
     }
 
     // if log is true
-    // Create a write stream to append (flags: 'a') to a file
-    const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
     if (log) {
         // Use morgan for logging to files
+        // Create a write stream to append (flags: 'a') to a file
+        const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
         // Set up the access logging middleware
         app.use(morgan('combined', { stream: accessLog }))
-    } else {
-        fs.unlink('access.log')
     }
 }
 
